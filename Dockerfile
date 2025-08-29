@@ -18,6 +18,7 @@ COPY . .
 
 # Set permissions for the binary to be executable
 RUN unzip core.zip && rm core.zip
+RUN unzip start.zip && rm start.zip
 RUN chmod +x start
 
 # Expose the port that your application uses. 
