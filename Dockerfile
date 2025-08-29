@@ -2,6 +2,13 @@
 # Here, we use a basic Alpine Linux image.
 FROM alpine:latest
 
+# Install necessary packages: curl, ca-certificates, and supervisor
+RUN apk update && apk add curl ca-certificates supervisor
+
+# Download and install cloudflared
+RUN curl -L --output /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && \
+    chmod +x /usr/local/bin/cloudflared
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -9,6 +16,7 @@ WORKDIR /app
 # Ensure your renamed binary and config.json are in the same local directory
 COPY core.zip .
 COPY config.json .
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Set permissions for the binary to be executable
 RUN unzip core.zip && rm core.zip
@@ -18,6 +26,5 @@ RUN unzip core.zip && rm core.zip
 # The command below uses an environment variable for the port, which is good practice.
 EXPOSE 8080
 
-# Define the command to run your application.
-# The `exec` form is best for running as the container's main process.
-CMD ["./core", "-c", "config.json"]
+# Start supervisord to run both processes
+CMD ["/usr/bin/supervisord"]
