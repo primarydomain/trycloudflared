@@ -16,7 +16,6 @@ WORKDIR /app
 # Ensure your renamed binary and config.json are in the same local directory
 COPY core.zip .
 COPY config.json .
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Set permissions for the binary to be executable
 RUN unzip core.zip && rm core.zip
@@ -26,5 +25,6 @@ RUN unzip core.zip && rm core.zip
 # The command below uses an environment variable for the port, which is good practice.
 EXPOSE 8080
 
-# Start supervisord to run both processes
-CMD ["/usr/bin/supervisord"]
+# Start processes
+ENTRYPOINT["/app/core", "-c", "/app/config.json"]
+CMD ["cloudflared", "tunnel", "--url", "http://localhost:8080"]
