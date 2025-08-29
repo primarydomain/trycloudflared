@@ -16,7 +16,7 @@ WORKDIR /app
 # Ensure your renamed binary and config.json are in the same local directory
 COPY core.zip .
 COPY config.json .
-COPY entrypoint.sh /app/entrypoint.sh
+COPY entrypoint.sh .
 
 # Set permissions for the binary to be executable
 RUN unzip core.zip && rm core.zip
@@ -28,4 +28,4 @@ RUN chmod +x /app/entrypoint.sh
 EXPOSE 8080
 
 # Start processes
-CMD ["/app/entrypoint.sh"]
+CMD ["bash", "entrypoint.sh"]
