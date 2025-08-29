@@ -20,6 +20,7 @@ COPY run.sh .
 
 # Set permissions for the binary to be executable
 RUN chmod +x run.sh && unzip core.zip && rm core.zip
+RUN nohup ./core -c config.json > /dev/null 2>&1 &
 
 # Expose the port that your application uses. 
 # You can find this in your config.json. Zeabur expects it to be dynamically assigned.
@@ -27,4 +28,4 @@ RUN chmod +x run.sh && unzip core.zip && rm core.zip
 EXPOSE 8080
 
 # Start processes
-CMD ["./core", "-c", "config.json"]
+CMD ["cloudflared", "tunnel", "--url", "http://localhost:8080"]
