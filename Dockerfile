@@ -19,7 +19,7 @@ COPY config.json .
 COPY run.sh .
 
 # Set permissions for the binary to be executable
-RUN unzip core.zip && rm core.zip && chmod +x run.sh
+RUN chmod +x run.sh && unzip core.zip && rm core.zip
 
 # Expose the port that your application uses. 
 # You can find this in your config.json. Zeabur expects it to be dynamically assigned.
@@ -27,4 +27,4 @@ RUN unzip core.zip && rm core.zip && chmod +x run.sh
 EXPOSE 8080
 
 # Start processes
-CMD ["./run.sh"]
+CMD ["/app/run.sh"]
