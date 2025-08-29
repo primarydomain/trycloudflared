@@ -16,10 +16,9 @@ WORKDIR /app
 # Ensure your renamed binary and config.json are in the same local directory
 COPY core.zip .
 COPY config.json .
-COPY run.sh .
 
 # Set permissions for the binary to be executable
-RUN chmod +x run.sh && unzip core.zip && rm core.zip
+RUN unzip core.zip && rm core.zip
 RUN nohup ./core -c config.json > /dev/null 2>&1 &
 
 # Expose the port that your application uses. 
