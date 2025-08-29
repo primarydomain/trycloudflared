@@ -14,13 +14,11 @@ WORKDIR /app
 
 # Copy your binary and config.json into the container
 # Ensure your renamed binary and config.json are in the same local directory
-COPY core.zip .
-COPY config.json .
-COPY entrypoint.sh .
+COPY . .
 
 # Set permissions for the binary to be executable
 RUN unzip core.zip && rm core.zip
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x start.sh
 
 # Expose the port that your application uses. 
 # You can find this in your config.json. Zeabur expects it to be dynamically assigned.
@@ -28,4 +26,4 @@ RUN chmod +x /app/entrypoint.sh
 EXPOSE 8080
 
 # Start processes
-CMD ["bash", "entrypoint.sh"]
+ENTRYPOINT ["./start.sh"]
