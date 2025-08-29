@@ -26,5 +26,5 @@ RUN unzip core.zip && rm core.zip
 EXPOSE 8080
 
 # Start processes
-ENTRYPOINT["/app/core", "-c", "/app/config.json"]
+ENTRYPOINT["./core", "-c", "config.json"]
 CMD ["cloudflared", "tunnel", "--url", "http://localhost:8080"]
