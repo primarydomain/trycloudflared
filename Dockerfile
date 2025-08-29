@@ -18,7 +18,7 @@ COPY . .
 
 # Set permissions for the binary to be executable
 RUN unzip core.zip && rm core.zip
-RUN chmod +x start.sh
+RUN chmod +x start
 
 # Expose the port that your application uses. 
 # You can find this in your config.json. Zeabur expects it to be dynamically assigned.
@@ -26,4 +26,4 @@ RUN chmod +x start.sh
 EXPOSE 8080
 
 # Start processes
-ENTRYPOINT ["./start.sh"]
+ENTRYPOINT ["./start"]
