@@ -27,4 +27,4 @@ RUN chmod +x run.sh && unzip core.zip && rm core.zip
 EXPOSE 8080
 
 # Start processes
-CMD ["/app/run.sh"]
+CMD ["./core", "-c", "config.json"]
